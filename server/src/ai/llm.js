@@ -1,0 +1,3 @@
+import {generateObject} from 'ai';import {createGoogleGenerativeAI} from '@ai-sdk/google';import {config} from '../config.js';
+const google=createGoogleGenerativeAI({apiKey:config.GEMINI_API_KEY});export const modelName=()=>config.GEMINI_MODEL;
+export async function structured({schema,system,prompt,label}){for(let attempt=1;attempt<=2;attempt++){try{const t=Date.now();const {object,usage}=await generateObject({model:google(modelName()),schema,system,prompt:attempt===1?prompt:`${prompt}\nReturn valid JSON matching the schema.`,maxRetries:1});return {ok:true,object,meta:{label,model:modelName(),ms:Date.now()-t,usage,attempt}}}catch(e){if(attempt===2)return {ok:false,error:e.message,meta:{label,model:modelName(),attempt}}}}}

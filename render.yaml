@@ -1,0 +1,45 @@
+services:
+  - type: web
+    name: proofpay
+    runtime: node
+    region: singapore
+    plan: starter
+    buildCommand: npm ci --include=dev --prefix web && npm run build --prefix web && npm ci --prefix server
+    startCommand: node server/src/index.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "22.12.0"
+      - key: NODE_ENV
+        value: production
+      - key: PAYPAL_ENV
+        value: sandbox
+      - key: WEBHOOK_VERIFY
+        value: offline
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: CLIENT_LINK_SECRET
+        sync: false
+      - key: IP_HASH_SALT
+        sync: false
+      - key: APP_BASE_URL
+        sync: false
+      - key: SEED_FREELANCER_EMAIL
+        sync: false
+      - key: SEED_FREELANCER_PASSWORD
+        sync: false
+      - key: PAYPAL_CLIENT_ID
+        sync: false
+      - key: PAYPAL_CLIENT_SECRET
+        sync: false
+      - key: PAYPAL_WEBHOOK_ID
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-3.5-flash-lite
+      - key: DEBUG_TOKEN
+        sync: false
+
