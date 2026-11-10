@@ -10,17 +10,17 @@ Updated 2026-11-11.
 - Gemini structured generation returned a valid assessment. The optional Agent Toolkit function-calling path failed on a missing `thought_signature`; the app uses structured generation and directly orchestrated API calls instead.
 - MongoDB Atlas connected successfully from the app runner; the idempotent seed created the public demo user, Sandbox project, and DRAFT milestone.
 - Local Express health check returned `ok: true`, `db: true`, and the production-built frontend returned HTTP 200.
-- Frontend production build succeeds. Backend unit tests: 8 passed.
+- Frontend production build succeeds. Backend unit tests: 9 passed.
+- Public GitHub repo `Pratheesh-555/Proof-Pay` is on `main` at commit `b84a05e`.
 
 ## Still required before portal submission
 
-1. Publish the repository to the supplied GitHub repo and make sure it is public with the MIT license.
-2. Create the Render service from `render.yaml`, set its environment values (including public `APP_BASE_URL`, Atlas URI, demo credentials, PayPal Sandbox credentials, Gemini key, and the deployment's webhook ID), and deploy.
-3. Register `https://YOUR-HOST/api/webhooks/paypal` in the Sandbox PayPal app. Set `PAYPAL_WEBHOOK_ID` and `WEBHOOK_VERIFY=online` in Render.
-4. Open the hosted app in a private browser session with the public demo login; verify login, project/milestone seed, and the dispute screen. The sandbox case can remain under review; do not imply an outcome.
-5. Record and upload the public demo video (under three minutes) and complete the portal fields, then submit.
+1. Create the Render service from `render.yaml`, set its environment values (including public `APP_BASE_URL`, Atlas URI, demo credentials, PayPal Sandbox credentials, Gemini key, and the deployment's webhook ID), and deploy.
+2. Register `https://YOUR-HOST/api/webhooks/paypal` in the Sandbox PayPal app. Set `PAYPAL_WEBHOOK_ID` and `WEBHOOK_VERIFY=online` in Render.
+3. Open the hosted app in a private browser session with the public demo login; verify login, project/milestone seed, and the dispute screen. The sandbox case can remain under review; do not imply an outcome.
+4. Record and upload the public demo video (under three minutes) and complete the portal fields, then submit.
 
-Items 1, 2, 3, and 5 require access to the user's GitHub, Render, PayPal Developer, and Devpost sessions. The repository work and Atlas seed are done.
+The remaining deploy, webhook, video, and portal steps require access to the user's Render, PayPal Developer, recording/YouTube, and Devpost sessions. The GitHub repository work and Atlas seed are done.
 
 ## Known limits
 
