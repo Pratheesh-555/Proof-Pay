@@ -38,7 +38,7 @@ export async function upsertDispute(dispute, { analyse = false, ownerId } = {}) 
     const milestone = await Milestone.findById(doc.milestoneId);
     if (milestone && ['PAID', 'INVOICED'].includes(milestone.status)) { milestone.status = 'DISPUTED'; await milestone.save(); }
   } else if (!doc.milestoneId) doc.status = 'UNMAPPED';
-  doc.timeline.push({ type: created ? 'DISPUTE_CREATED' : 'DISPUTE_REFRESHED', detail: `${dispute.status ?? 'unknown'}; actions: ${doc.paypal.allowedActions.join(', ')}` });
+  doc.timeline.push({ eventType: created ? 'DISPUTE_CREATED' : 'DISPUTE_REFRESHED', detail: `${dispute.status ?? 'unknown'}; actions: ${doc.paypal.allowedActions.join(', ')}` });
   await doc.save();
   if (analyse && doc.milestoneId && ['ANALYSING', 'NEW'].includes(doc.status)) await analyseCase(doc._id);
   return doc;

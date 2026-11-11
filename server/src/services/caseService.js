@@ -75,7 +75,7 @@ export async function submitCase(id) {
   else if (action === 'ACCEPT' && actions.includes('accept_claim')) result = await acceptClaim(doc.paypal.raw.dispute_id, { note: doc.finalNote });
   else throw new AppError('NOT_ALLOWED_NOW', 'PayPal does not currently allow the selected action.', 409, { allowedActions: actions });
   doc.submissions.push({ at: new Date(), action, ok: true, httpStatus: 200, requestSummary: doc.isReplay ? result.requestSummary : 'PayPal dispute action submitted.' });
-  doc.status = 'WAITING_PAYPAL'; doc.timeline.push({ type: 'SUBMITTED', detail: result.requestSummary ?? action }); await doc.save(); return doc;
+  doc.status = 'WAITING_PAYPAL'; doc.timeline.push({ eventType: 'SUBMITTED', detail: result.requestSummary ?? action }); await doc.save(); return doc;
 }
 
 export async function refreshCase(id) { const doc = await load(id); if (doc.isReplay) return doc; const remote = await getDispute(doc.paypal.raw.dispute_id); doc.paypal = { ...doc.paypal.toObject(), status: remote.status, stage: remote.dispute_life_cycle_stage, allowedActions: availableActions(remote), raw: remote, refreshedAt: new Date() }; await doc.save(); return doc; }

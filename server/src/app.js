@@ -14,6 +14,7 @@ import {asyncHandler} from './middleware/asyncHandler.js';
 import {config} from './config.js';
 
 const app=express();
+if (config.NODE_ENV === 'production') app.set('trust proxy', 1);
 app.disable('x-powered-by');app.use(helmet());app.use(cookieParser());
 app.get('/api/health',asyncHandler(async(_req,res)=>{const mongoose=await import('mongoose');res.json({ok:true,db:mongoose.default.connection.readyState===1,paypalTokenOk:null,version:'0.1.0'})}));
 // PayPal signatures require the exact raw bytes; register before JSON parsing.

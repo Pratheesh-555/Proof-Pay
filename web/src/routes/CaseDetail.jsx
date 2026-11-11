@@ -38,6 +38,6 @@ export default function CaseDetail() {
         <div className="mt-4 flex flex-wrap gap-2"><button className="secondary-button" disabled={busy || doc.status !== 'READY'} onClick={saveDraft}>Save edits</button><button className="primary-button" disabled={busy || doc.status !== 'READY' || !finalNote.trim()} onClick={() => run(`/cases/${caseId}/approve`, { confirm: true })}>Approve response</button><button className="primary-button" disabled={busy || doc.status !== 'APPROVED'} onClick={() => run(`/cases/${caseId}/submit`)}>Submit to PayPal</button></div>
       </section>
     </div>}
-    {doc.timeline?.length > 0 && <section className="mt-5 rounded-2xl border border-line bg-white p-5 shadow-panel"><h2 className="font-semibold">Case timeline</h2><ol className="mt-3 space-y-2">{doc.timeline.slice().reverse().map((item, i) => <li key={`${item.type}-${i}`} className="text-sm"><span className="font-medium">{item.type?.replaceAll('_', ' ')}</span><span className="text-muted"> — {item.detail}</span></li>)}</ol></section>}
+    {doc.timeline?.length > 0 && <section className="mt-5 rounded-2xl border border-line bg-white p-5 shadow-panel"><h2 className="font-semibold">Case timeline</h2><ol className="mt-3 space-y-2">{doc.timeline.slice().reverse().map((item, i) => <li key={`${item.eventType}-${i}`} className="text-sm"><span className="font-medium">{item.eventType?.replaceAll('_', ' ')}</span><span className="text-muted"> — {item.detail}</span></li>)}</ol></section>}
   </div>;
 }

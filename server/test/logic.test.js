@@ -5,6 +5,7 @@ import {applyPolicy} from '../src/ai/policy.js';
 import {checkClaims,composeNote} from '../src/ai/verifierRules.js';
 import {availableActions} from '../src/payments/paypal/disputes.js';
 import {assertApproved,submissionHash} from '../src/services/gate.js';
+import {Case} from '../src/db/models.js';
 
 test('money conversion uses integer cents and rejects invalid precision',()=>{
  assert.equal(dollarsToCents('25.01'),2501);assert.equal(centsToDollars(2501),'25.01');assert.throws(()=>dollarsToCents('1.999'));
@@ -38,4 +39,8 @@ test('approval gate detects a changed draft hash',()=>{
  assert.doesNotThrow(()=>assertApproved(doc));
  doc.ai.draft.closing='Changed after approval';
  assert.throws(()=>assertApproved(doc),/Approve the current draft/);
+});
+test('case timeline stores event objects',()=>{
+ const doc=new Case({paypalDisputeId:'PP-R-TEST-001',timeline:[{eventType:'DISPUTE_CREATED',detail:'UNDER_REVIEW'}]});
+ assert.equal(doc.validateSync(),undefined);assert.equal(doc.timeline[0].eventType,'DISPUTE_CREATED');
 });
