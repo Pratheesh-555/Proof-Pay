@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '../../auth/AuthContext.jsx';
 
 const links = [
@@ -10,6 +10,7 @@ const links = [
 
 export default function AppShell({ user }) {
   const auth = useAuth();
+  const location = useLocation();
   const firstName = user?.name?.split(' ')[0] || 'Freelancer';
   const today = new Intl.DateTimeFormat(undefined, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }).format(new Date());
   async function signOut() { await auth.logout(); }
@@ -46,7 +47,7 @@ export default function AppShell({ user }) {
           <div className="hidden text-xs text-muted sm:block">{today} <span className="mx-2 text-[#d5dbd8]">/</span> <span className="font-medium text-ink">Workspace</span></div>
           <div className="flex items-center gap-3"><button className="icon-button" aria-label="Notifications">♧</button><button className="help-button">Help & feedback <span className="ml-1 text-muted">↗</span></button></div>
         </header>
-        <main className="mx-auto max-w-[1440px] px-5 py-8 sm:px-8 sm:py-10"><Outlet /></main>
+        <main className="mx-auto max-w-[1440px] px-5 py-8 sm:px-8 sm:py-10"><div key={location.pathname} className="page-enter"><Outlet /></div></main>
       </div>
     </div>
   );

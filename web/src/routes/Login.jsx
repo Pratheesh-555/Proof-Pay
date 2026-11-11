@@ -19,7 +19,7 @@ export default function Login() {
   }
 
   return <main className="flex min-h-screen items-center justify-center bg-canvas px-5 py-12">
-    <section className="w-full max-w-md rounded-3xl border border-line bg-white p-8 shadow-panel sm:p-10">
+    <section className="page-enter w-full max-w-md rounded-3xl border border-line bg-white p-8 shadow-panel sm:p-10">
       <div className="brand-mark mb-6">p</div>
       <p className="eyebrow">FREELANCER WORKSPACE</p>
       <h1 className="page-title mt-2">Welcome back</h1>
