@@ -4,14 +4,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        ink: '#111111',
-        muted: '#686a6d',
+        ink: '#101828',
+        muted: '#667085',
         canvas: '#f5f6f8',
         line: '#e5e7eb',
-        brand: { DEFAULT: '#0066f5', dark: '#053782', soft: '#edf4ff' },
+        brand: { DEFAULT: '#0070e0', dark: '#003087', soft: '#eaf2ff' },
       },
-      boxShadow: { panel: '0 3px 18px rgba(17, 24, 39, 0.055)' },
-      fontFamily: { sans: ['Arial', 'Helvetica Neue', 'sans-serif'] },
+      boxShadow: { panel: '0 2px 14px rgba(16, 24, 40, 0.05)' },
+      fontFamily: { sans: ['Outfit', 'ui-sans-serif', 'system-ui', 'sans-serif'] },
     },
   },
   plugins: [],
