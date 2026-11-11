@@ -35,7 +35,7 @@ export default function ProjectDetail() {
   return <div>
     <Header eyebrow="PROJECT" title={project?.title || 'Project'} description={project?.description || `${project?.clientId?.name || 'Client'} · ${project?.clientId?.email || ''}`} action={<Link to="/projects" className="secondary-button">← Projects</Link>} />
     {error && <Notice>{error}</Notice>}{success && <Notice tone="success">{success}</Notice>}
-    <div className="mb-6 rounded-2xl border border-[#dce9e0] bg-[#f2f8f4] p-5">
+    <div className="mb-6 rounded-2xl border border-[#dbe7fa] bg-[#f3f7ff] p-5">
       <div className="flex flex-wrap items-center justify-between gap-4"><div><p className="eyebrow">CLIENT REVIEW</p><h2 className="mt-1 text-sm font-semibold">Share a private approval link</h2><p className="mt-1 text-xs text-muted">Links expire after 30 days. Rotating one invalidates the previous link.</p></div><div className="flex gap-2"><button className="secondary-button" onClick={rotateLink}>Generate link</button><button className="primary-button" onClick={copyLink} disabled={!clientLink}>Copy link</button></div></div>
       {clientLink && <p className="mt-3 break-all rounded-lg bg-white px-3 py-2 font-mono text-xs text-muted">{clientLink}</p>}
     </div>

@@ -66,17 +66,17 @@ export default function Dashboard() {
     </div>
     <section className="overflow-hidden rounded-2xl border border-line bg-white shadow-panel">
       <div className="flex flex-col justify-between gap-4 border-b border-line px-5 py-5 sm:flex-row sm:items-center sm:px-6">
-        <div><h2 className="text-[15px] font-semibold tracking-[-0.02em]">Dispute inbox</h2><p className="mt-1 text-xs text-muted">AI drafts require your review and approval.</p></div>
+        <div><h2 className="text-base font-semibold tracking-[-0.02em]">Dispute inbox</h2><p className="mt-1 text-xs text-muted">Cases linked to your projects and milestones.</p></div>
         <Link to="/cases" className="text-xs font-semibold text-brand">Open case workspace →</Link>
       </div>
       <div className="ag-theme-quartz proofpay-grid h-[330px] w-full">
         <AgGridReact rowData={rows} columnDefs={columns} rowHeight={54} headerHeight={42} suppressCellFocus pagination={false} loading={loading} overlayNoRowsTemplate="<span>No disputes yet. Import a Sandbox dispute from the Dispute cases page.</span>" />
       </div>
-      <div className="flex flex-col justify-between gap-2 border-t border-line bg-[#fcfdfc] px-6 py-3 text-[11px] text-muted sm:flex-row"><span>PayPal Sandbox environment</span><span>AI recommendations are advisory; you approve every submission.</span></div>
+      <div className="flex flex-col justify-between gap-2 border-t border-line bg-[#fafbfc] px-6 py-3 text-xs text-muted sm:flex-row"><span>No live funds move in this demo.</span><span>PayPal decides dispute outcomes; AI suggestions are drafts.</span></div>
     </section>
   </div>;
 }
 
 function Metric({ label, value, note, icon, tone }) {
-  return <div className="rounded-2xl border border-line bg-white p-5 shadow-panel"><div className="flex items-center justify-between"><span className="text-xs font-medium text-muted">{label}</span><span className={`metric-icon metric-${tone}`}>{icon}</span></div><div className="mt-4 text-[27px] font-semibold tracking-[-0.055em]">{value}</div><div className="mt-1 text-[11px] text-muted">{note}</div></div>;
+  return <div className="rounded-2xl border border-line bg-white p-5 shadow-panel"><div className="flex items-center justify-between"><span className="text-sm font-medium text-muted">{label}</span><span className={`metric-icon metric-${tone}`}>{icon}</span></div><div className="mt-4 text-[29px] font-semibold tracking-[-0.055em]">{value}</div><div className="mt-1 text-xs text-muted">{note}</div></div>;
 }

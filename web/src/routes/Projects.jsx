@@ -18,7 +18,7 @@ export default function Projects() {
     {error && <Notice>{error}</Notice>}
     <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_380px]">
       <section className="space-y-3">
-        {loading ? <p className="text-sm text-muted">Loading projects…</p> : projects.length ? projects.map((p) => <Link key={p._id} to={`/projects/${p._id}`} className="block rounded-2xl border border-line bg-white p-5 shadow-panel hover:border-[#c7d9ce]">
+        {loading ? <p className="text-sm text-muted">Loading projects…</p> : projects.length ? projects.map((p) => <Link key={p._id} to={`/projects/${p._id}`} className="block rounded-2xl border border-line bg-white p-5 shadow-panel hover:border-[#c7d8f5]">
           <div className="flex flex-wrap items-start justify-between gap-3"><div><h2 className="font-semibold">{p.title}</h2><p className="mt-1 text-sm text-muted">{p.clientId?.name} · {p.clientId?.email}</p></div><span className="status-pill status-progress"><span className="status-dot" />{p.status}</span></div>
           {p.description && <p className="mt-3 text-sm leading-6 text-muted">{p.description}</p>}
         </Link>) : <Empty title="No projects yet" text="Create one to start a client approval and PayPal invoice flow." />}
