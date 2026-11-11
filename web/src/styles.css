@@ -1,39 +1,40 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root { font-family: 'DM Sans', ui-sans-serif, system-ui, sans-serif; font-synthesis: none; text-rendering: optimizeLegibility; }
+:root { font-family: 'Outfit', ui-sans-serif, system-ui, sans-serif; font-synthesis: none; text-rendering: optimizeLegibility; }
 * { box-sizing: border-box; }
 body { margin: 0; min-width: 320px; }
-.brand-mark { display:flex; height:36px; width:36px; align-items:center; justify-content:center; border-radius:11px; background:#216b58; color:#fff; font-family:Manrope,sans-serif; font-size:20px; font-weight:800; letter-spacing:-.08em; }
+.brand-mark { display:flex; height:36px; width:36px; align-items:center; justify-content:center; border-radius:11px; background:#111827; color:#fff; font-family:Outfit,sans-serif; font-size:20px; font-weight:800; letter-spacing:-.08em; }
 .nav-item { display:flex; align-items:center; gap:12px; border-radius:10px; padding:10px 12px; color:#64716b; font-size:12px; font-weight:500; transition:background .15s,color .15s; }
 .nav-item:hover { background:#f7f9f7; color:#263630; }
-.nav-item-active { background:#edf5f0; color:#205c4b; font-weight:600; }
+.nav-item-active { background:#eaf2ff; color:#003087; font-weight:600; }
 .nav-icon { display:flex; width:18px; justify-content:center; color:#819089; font-size:16px; line-height:1; }
-.nav-item-active .nav-icon { color:#216b58; }
+.nav-item-active .nav-icon { color:#0070e0; }
 .avatar { display:flex; height:34px; width:34px; align-items:center; justify-content:center; border-radius:50%; background:#e9eee9; color:#486154; font-size:10px; font-weight:700; }
 .icon-button { display:flex; height:34px; width:34px; align-items:center; justify-content:center; border:1px solid #e8ece9; border-radius:10px; background:#fff; color:#65716b; font-size:17px; }
 .help-button { border:0; background:transparent; color:#53615a; font-size:11px; font-weight:600; }
 .eyebrow { margin:0; color:#83908a; font-size:10px; font-weight:700; letter-spacing:.14em; }
-.page-title { margin:5px 0 0; font-family:Manrope,'DM Sans',sans-serif; font-size:clamp(25px,3vw,32px); font-weight:700; letter-spacing:-.055em; line-height:1.2; }
-.wave { display:inline-block; margin-left:2px; color:#c49348; font-size:19px; vertical-align:middle; }
-.primary-button { display:inline-flex; align-items:center; justify-content:center; border:0; border-radius:10px; background:#216b58; padding:10px 15px; color:#fff; font-size:12px; font-weight:600; box-shadow:0 2px 3px #216b581b; }
+.page-title { margin:5px 0 0; font-family:Outfit,ui-sans-serif,sans-serif; font-size:clamp(25px,3vw,32px); font-weight:700; letter-spacing:-.04em; line-height:1.2; }
+.wave { display:inline-block; margin-left:2px; color:#0070e0; font-size:19px; vertical-align:middle; }
+.primary-button { display:inline-flex; align-items:center; justify-content:center; border:0; border-radius:10px; background:#111827; padding:10px 15px; color:#fff; font-size:12px; font-weight:600; box-shadow:0 2px 3px #1118271b; transition:background .15s,transform .15s; }
+.primary-button:hover:not(:disabled) { background:#003087; }
 .primary-button:disabled { cursor:not-allowed; opacity:.72; }
 .secondary-button { display:inline-flex; align-items:center; justify-content:center; border:1px solid #e1e8e3; border-radius:10px; background:#fff; padding:9px 13px; color:#43534a; font-size:12px; font-weight:600; transition:background .15s,border-color .15s; }
 .secondary-button:hover { background:#f8faf8; border-color:#cddbd2; }
 .secondary-button:disabled { cursor:not-allowed; opacity:.6; }
 .field-label { display:flex; flex-direction:column; gap:7px; color:#53635a; font-size:11px; font-weight:600; }
 .field-input { width:100%; border:1px solid #dfe7e1; border-radius:9px; background:#fff; padding:10px 11px; color:#263630; font:inherit; font-size:12px; outline:none; }
-.field-input:focus { border-color:#6c9c82; box-shadow:0 0 0 3px #216b5814; }
+.field-input:focus { border-color:#0070e0; box-shadow:0 0 0 3px #0070e01a; }
 .field-input::placeholder { color:#a3ada7; }
 .field-input:disabled { background:#f4f6f4; color:#7c8982; }
 .metric-icon { display:flex; height:30px; width:30px; align-items:center; justify-content:center; border-radius:9px; font-size:13px; font-weight:700; }
-.metric-green { background:#edf5ef; color:#4f8d68; }.metric-sand { background:#f8f2e8; color:#a77c3c; }.metric-blue { background:#eef3f8; color:#6a829e; }.metric-rose { background:#f7efed; color:#ad7668; }
+.metric-green { background:#eaf2ff; color:#003087; }.metric-sand { background:#f0f2f7; color:#344054; }.metric-blue { background:#eaf7ff; color:#0070e0; }.metric-rose { background:#f7efed; color:#ad7668; }
 .status-pill { display:inline-flex; align-items:center; gap:6px; white-space:nowrap; border-radius:99px; padding:5px 8px; font-size:10px; font-weight:600; }
 .status-dot { height:6px; width:6px; border-radius:50%; background:currentColor; }
 .status-paid { background:#edf5ef; color:#4f8061; }.status-review { background:#fbf4e8; color:#a47c3f; }.status-progress { background:#f0f2f1; color:#6f7c75; }
-.proofpay-grid { --ag-font-family:'DM Sans',sans-serif; --ag-font-size:11px; --ag-header-font-size:9px; --ag-header-font-weight:700; --ag-header-foreground-color:#89948e; --ag-foreground-color:#39463f; --ag-border-color:transparent; --ag-row-border-color:#edf0ee; --ag-background-color:#fff; --ag-header-background-color:#fcfdfc; --ag-odd-row-background-color:#fff; --ag-grid-size:6px; }
+.proofpay-grid { --ag-font-family:'Outfit',ui-sans-serif,sans-serif; --ag-font-size:11px; --ag-header-font-size:9px; --ag-header-font-weight:700; --ag-header-foreground-color:#667085; --ag-foreground-color:#101828; --ag-border-color:transparent; --ag-row-border-color:#edf0f4; --ag-background-color:#fff; --ag-header-background-color:#fafbfc; --ag-odd-row-background-color:#fff; --ag-grid-size:6px; }
 .proofpay-grid .ag-header-cell-label { letter-spacing:.08em; }.proofpay-grid .ag-cell { display:flex; align-items:center; }
 @media (max-width:640px) { .proofpay-grid { --ag-font-size:10px; } }
 

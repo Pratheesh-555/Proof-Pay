@@ -20,8 +20,8 @@ export default function AppShell({ user }) {
           <div className="brand-mark">p</div>
           <div><div className="text-[17px] font-bold tracking-[-0.04em]">proofpay</div><div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-muted">Freelancer workspace</div></div>
         </div>
-        <div className="mx-4 mt-5 rounded-xl border border-line bg-[#fafbf9] p-3.5">
-          <div className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-[#7fa894]"/><span className="text-xs font-semibold text-[#466357]">Sandbox environment</span></div>
+        <div className="mx-4 mt-5 rounded-xl border border-line bg-[#f8faff] p-3.5">
+          <div className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-[#0070e0]"/><span className="text-xs font-semibold text-[#003087]">Sandbox environment</span></div>
           <p className="mb-0 mt-1.5 text-[11px] leading-4 text-muted">Payments and dispute actions are simulated with PayPal Sandbox.</p>
         </div>
         <nav className="mt-8 flex-1 px-3">
