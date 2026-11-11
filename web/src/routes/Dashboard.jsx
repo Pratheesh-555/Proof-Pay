@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
 import { AgGridReact } from 'ag-grid-react';
-import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
+import { ClientSideRowModelModule, ModuleRegistry, TooltipModule } from 'ag-grid-community';
 import { Link } from 'react-router-dom';
 import { api } from '../api.js';
 import { useAuth } from '../auth/AuthContext.jsx';
 
-ModuleRegistry.registerModules([AllCommunityModule]);
+ModuleRegistry.registerModules([ClientSideRowModelModule, TooltipModule]);
 
 function money(cents, currency = 'USD') {
   const code = typeof currency === 'string' && /^[A-Z]{3}$/.test(currency) ? currency : 'USD';
@@ -26,6 +26,18 @@ export default function Dashboard() {
   const [milestoneCount, setMilestoneCount] = useState(0);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
+  const [gridLayout, setGridLayout] = useState(() => {
+    if (typeof window === 'undefined') return 'wide';
+    return window.innerWidth < 640 ? 'mobile' : window.innerWidth < 1160 ? 'compact' : 'wide';
+  });
+  useEffect(() => {
+    function updateGridLayout() {
+      const width = window.innerWidth;
+      setGridLayout(width < 640 ? 'mobile' : width < 1160 ? 'compact' : 'wide');
+    }
+    window.addEventListener('resize', updateGridLayout);
+    return () => window.removeEventListener('resize', updateGridLayout);
+  }, []);
   async function load() {
     setLoading(true); setError('');
     try { const [p, c] = await Promise.all([api.get('/projects'), api.get('/cases')]); const projectRows = p.projects ?? []; setProjects(projectRows); setCases(c.cases ?? []); const details = await Promise.all(projectRows.map((project) => api.get(`/projects/${project._id}`))); setMilestoneCount(details.reduce((sum, detail) => sum + (detail.milestones?.length ?? 0), 0)); }
@@ -42,14 +54,18 @@ export default function Dashboard() {
     status: item.status,
     action: item.decision?.action || '—',
   })), [cases]);
-  const columns = useMemo(() => [
-    { field: 'dispute', headerName: 'DISPUTE', minWidth: 170, flex: 1, cellRenderer: ({ data }) => <Link className="font-semibold text-brand" to={`/cases/${data.id}`}>{data.dispute}</Link> },
-    { field: 'project', headerName: 'PROJECT', minWidth: 125, flex: 1, tooltipField: 'project' },
-    { field: 'reason', headerName: 'REASON', minWidth: 135, flex: 1, tooltipField: 'reason' },
-    { field: 'amount', headerName: 'AMOUNT', width: 95 },
-    { field: 'action', headerName: 'AI ACTION', width: 98 },
-    { field: 'status', headerName: 'STATUS', width: 125, cellRenderer: StatusCell },
-  ], []);
+  const columns = useMemo(() => {
+    const mobile = gridLayout === 'mobile';
+    const compact = gridLayout !== 'wide';
+    return [
+      { field: 'dispute', headerName: 'DISPUTE', minWidth: mobile ? 155 : 170, flex: 1, cellRenderer: ({ data }) => <Link className="font-semibold text-brand" to={`/cases/${data.id}`}>{data.dispute}</Link> },
+      { field: 'project', headerName: 'PROJECT', minWidth: 140, flex: 1, hide: mobile, tooltipField: 'project' },
+      { field: 'reason', headerName: 'REASON', minWidth: 160, flex: 1, hide: compact, tooltipField: 'reason' },
+      { field: 'amount', headerName: 'AMOUNT', width: 100, hide: mobile },
+      { field: 'action', headerName: 'AI ACTION', width: 130, hide: compact },
+      { field: 'status', headerName: 'STATUS', width: mobile ? 140 : 145, cellRenderer: StatusCell },
+    ];
+  }, [gridLayout]);
   const openCases = cases.filter((c) => !['RESOLVED', 'SUBMITTED'].includes(c.status)).length;
 
   return <div>
@@ -69,7 +85,7 @@ export default function Dashboard() {
         <div><h2 className="text-base font-semibold tracking-[-0.02em]">Dispute inbox</h2><p className="mt-1 text-xs text-muted">Cases linked to your projects and milestones.</p></div>
         <Link to="/cases" className="text-xs font-semibold text-brand">Open case workspace →</Link>
       </div>
-      <div className="ag-theme-quartz proofpay-grid h-[330px] w-full">
+      <div className={`ag-theme-quartz proofpay-grid w-full ${gridLayout === 'mobile' ? 'h-[190px]' : 'h-[330px]'}`}>
         <AgGridReact rowData={rows} columnDefs={columns} rowHeight={54} headerHeight={42} tooltipShowDelay={250} suppressCellFocus pagination={false} loading={loading} overlayNoRowsTemplate="<span>No disputes yet. Import a Sandbox dispute from the Dispute cases page.</span>" />
       </div>
       <div className="flex flex-col justify-between gap-2 border-t border-line bg-[#fafbfc] px-6 py-3 text-xs text-muted sm:flex-row"><span>PayPal decides dispute outcomes.</span><span>AI suggestions are drafts.</span></div>
