@@ -40,6 +40,14 @@ test('approval gate detects a changed draft hash',()=>{
  doc.ai.draft.closing='Changed after approval';
  assert.throws(()=>assertApproved(doc),/Approve the current draft/);
 });
+test('approval gate binds retained evidence-linked claims',()=>{
+ const draft={claims:[{text:'Raw draft',evidenceIds:['E1']}]};
+ const claims=[{text:'Retained claim',evidenceIds:['E1']}];
+ const doc={status:'APPROVED',approval:{draftHash:submissionHash({ai:{draft,claims}})},ai:{draft,claims}};
+ assert.doesNotThrow(()=>assertApproved(doc));
+ doc.ai.claims[0].text='Changed retained claim';
+ assert.throws(()=>assertApproved(doc),/Approve the current draft/);
+});
 test('case timeline stores event objects',()=>{
  const doc=new Case({paypalDisputeId:'PP-R-TEST-001',timeline:[{eventType:'DISPUTE_CREATED',detail:'UNDER_REVIEW'}]});
  assert.equal(doc.validateSync(),undefined);assert.equal(doc.timeline[0].eventType,'DISPUTE_CREATED');

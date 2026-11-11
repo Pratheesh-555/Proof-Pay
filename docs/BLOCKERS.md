@@ -1,31 +1,30 @@
-# Submission readiness and remaining blockers
+# Submission readiness
 
 Updated 2026-11-11.
 
-## Verified
+## Complete
 
-- PayPal Sandbox OAuth token works and the app has invoicing, disputes, and webhook scopes.
+- PayPal Sandbox OAuth and invoicing, disputes, and webhook scopes work.
 - A Sandbox invoice was sent and paid with the Sandbox Personal account.
-- The buyer-created Sandbox dispute was escalated and entered PayPal review. It currently appears as **UNDER REVIEW**; it has not been resolved.
-- Gemini structured generation returned a valid assessment. The optional Agent Toolkit function-calling path failed on a missing `thought_signature`; the app uses structured generation and directly orchestrated API calls instead.
-- MongoDB Atlas connected successfully from the app runner; the idempotent seed created the public demo user, Sandbox project, and DRAFT milestone.
-- Local Express health check returned `ok: true`, `db: true`, and the production-built frontend returned HTTP 200.
-- Frontend production build succeeds. Backend unit tests: 10 passed.
-- Public GitHub repo `Pratheesh-555/Proof-Pay` is on `main` at commit `b84a05e`.
+- The buyer-created Sandbox dispute was imported, mapped to project work, analyzed, reviewed by a person, and submitted through a PayPal-allowed action. PayPal later reported **RESOLVED**. This is only the Sandbox test outcome.
+- Gemini structured generation works in the direct server-side workflow. The optional Agent Toolkit function-calling experiment is not used because of a provider `thought_signature` error.
+- MongoDB Atlas connected from the hosted app; the idempotent seed created the public demo user, Sandbox project, and DRAFT milestone.
+- The public Render app loaded, its database health check passed, and the demo account signed in.
+- PayPal Sandbox webhook verification is enabled on the hosted app.
+- The public GitHub repository is MIT licensed and contains setup instructions.
+- This final hardening pass adds a filtered-claims review UI, invalidates old approvals when analysis or mapping changes, includes retained claims in the approval hash, and refreshes PayPal actions immediately before submission.
 
-## Still required before portal submission
+## Remaining user action
 
-1. Create the Render Free service from `render.yaml`, set its environment values (including public `APP_BASE_URL`, Atlas URI, demo credentials, PayPal Sandbox credentials, Gemini key, and the deployment's webhook ID), and deploy. Tell judges a Free instance may need about a minute to wake after idling.
-2. Register `https://YOUR-HOST/api/webhooks/paypal` in the Sandbox PayPal app. Set `PAYPAL_WEBHOOK_ID` and `WEBHOOK_VERIFY=online` in Render.
-3. Open the hosted app in a private browser session with the public demo login; verify login, project/milestone seed, and the dispute screen. The sandbox case can remain under review; do not imply an outcome.
-4. Record and upload the public demo video (under three minutes) and complete the portal fields, then submit.
+Record and upload the demo video (under three minutes) to YouTube, paste its public link into the Devpost entry, and submit. The written submission and recording outline are in `docs/DEVPOST_SUBMISSION.md`. Devpost requires a working demo, public source repository, description of tools used, and a public YouTube video.
 
-The remaining deploy, webhook, video, and portal steps require access to the user's Render, PayPal Developer, recording/YouTube, and Devpost sessions. The GitHub repository work and Atlas seed are done.
+The deployed demo runs on Render Free and may need about a minute to wake after inactivity. Public demo credentials are intentionally disposable and are documented in the README and submission pack.
 
-## Known limits
+## Limits to disclose
 
-- PayPal controls dispute status and allowed actions. A Sandbox case in review can offer no action at that moment.
-- Supporting-info submission sends a text note. File upload and broader delivery-source integrations are not in this hackathon build.
-- The GitHub release/commit and deployed-URL evidence connectors, background reminder delivery, and full evidence upload flow remain follow-up work; do not describe them as completed.
-- The optional PayPal Agent Toolkit tool-calling path is not used because of the model-provider `thought_signature` error; the direct structured-generation workflow works.
-- The frontend bundle still includes a large AG Grid chunk; the dashboard is lazy-loaded so non-dashboard routes do not need it immediately.
+- PayPal controls dispute status, available actions, and the final outcome. ProofPay does not adjudicate disputes.
+- The Sandbox test case resolved; this does not show that ProofPay can cause a real case to be won.
+- Supporting-info submission sends a text note. The full supporting-file upload flow is not implemented.
+- GitHub release/commit and deploy URL evidence connectors, background reminder delivery, and full evidence upload remain future work.
+- The working AI path uses Gemini structured generation. The optional Agent Toolkit tool-calling path is not part of the demo.
+- Render Free sleeps when idle; allow for a cold start.

@@ -14,7 +14,7 @@
 - Gemini structured output. The optional PayPal Agent Toolkit tool-calling path is not required by the direct API workflow.
 - MongoDB persistence and a repeatable demo seed command.
 
-The Sandbox invoice payment and dispute were exercised manually. The test dispute is currently **under review** by PayPal. That does not mean the dispute was won or resolved. The application still needs a public deployment and a final click-through using the deployed URL before it is ready for judges.
+The deployed Sandbox flow has been exercised end to end: a Sandbox invoice was paid, the resulting dispute was imported and mapped, AI analysis ran, a human approved an allowed response, and PayPal later reported the case as **RESOLVED**. This is a Sandbox demonstration, not a claim about a live customer dispute or proof that ProofPay can control PayPal's adjudication outcome. The hosted demo runs on Render Free and can take about a minute to wake after inactivity.
 
 ## Stack
 
@@ -88,7 +88,7 @@ For Render, use [`render.yaml`](render.yaml) as the service blueprint and enter 
 
 ## Hackathon submission
 
-The repository is MIT licensed. The project submission also needs a working public demo URL, a short public demo video, and the project description/AI and PayPal integration details requested by the [PayPal AI Hackathon portal](https://paypalaihackathon.devpost.com/). Do not say the sample dispute is resolved while PayPal lists it as under review.
+The repository is MIT licensed. The deployed demo URL is `https://proofpay-kvc2.onrender.com`; public Sandbox demo login is `demo@proofpay.dev` / `ProofPay-Demo-2026!`. The Devpost text, tool descriptions, limitations, and a sub-three-minute recording outline are in [`docs/DEVPOST_SUBMISSION.md`](docs/DEVPOST_SUBMISSION.md). Add the public YouTube demo-video link in Devpost before submitting. The PayPal case used for the walkthrough is resolved in Sandbox; PayPal remains responsible for deciding real disputes.
 
 See [`docs/SYSTEM_OVERVIEW.md`](docs/SYSTEM_OVERVIEW.md) for the frontend/backend architecture and workflow.
 

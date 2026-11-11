@@ -6,6 +6,7 @@ export const draftHash = (value) => sha256(canonicalJSON(value ?? {}));
 export function submissionHash(caseDoc) {
   return draftHash({
     draft: caseDoc.ai?.draft,
+    claims: caseDoc.ai?.claims ?? [],
     action: caseDoc.decision?.action,
     refundCents: caseDoc.decision?.refundCents,
     finalNote: caseDoc.finalNote,

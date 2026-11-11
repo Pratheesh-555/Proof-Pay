@@ -28,7 +28,7 @@ flowchart LR
   H --> S[Allowed PayPal action]
 ```
 
-PayPal controls current dispute actions and final case outcome. A case shown as **under review** is pending, not won or resolved. Evidence marked `CLAIMED` is seller-provided; `VERIFIED` is captured from a connected system or client action. AI output is advisory and the current response must pass the approval hash gate before submission.
+PayPal controls current dispute actions and final case outcome. ProofPay refreshes the dispute immediately before an action and uses only PayPal's current allowed actions. Evidence marked `CLAIMED` is seller-provided; `VERIFIED` is captured from a connected system or client action. AI output is advisory: unsupported evidence references are filtered, the retained claims are shown separately from raw model output, and the current response must pass the approval hash gate before submission. New analysis or remapping clears a prior approval. A Sandbox demonstration case completed this workflow and PayPal later reported it as resolved; that is not a live payment or a guarantee of any dispute outcome.
 
 ## Main API areas
 
