@@ -74,7 +74,7 @@ Never claim service delivery or attach evidence that does not exist. The AI reco
 
 See [`server/.env.example`](server/.env.example) for the complete list. Required values include MongoDB URI, session/link secrets, demo login, PayPal Sandbox credentials and webhook ID, Gemini API key, and app base URL. Use strong unique secrets on a hosted deployment. Set `APP_BASE_URL` to the deployed app origin so client review links point to the right host.
 
-For Render, use [`render.yaml`](render.yaml) as the service blueprint and enter each secret in Render's environment settings. Set `WEBHOOK_VERIFY=online`; use the webhook ID created for the deployed callback. After first deployment, run `npm run seed` from a one-off shell or deployment shell.
+For Render, use [`render.yaml`](render.yaml) as the service blueprint and enter each secret in Render's environment settings. The blueprint uses Render Free, enables the idempotent demo seed at app startup, and sets `WEBHOOK_VERIFY=online`; use the webhook ID created for the deployed callback. Free services sleep after 15 minutes without traffic and may take about a minute to wake, so tell judges to allow a cold start. Render Free has no one-off jobs or shell access, so the demo seed runs automatically when the app starts. See Render's [Free instance limits](https://render.com/docs/free).
 
 ## Security and demo boundaries
 
@@ -84,6 +84,7 @@ For Render, use [`render.yaml`](render.yaml) as the service blueprint and enter 
 - Webhook callbacks verify the PayPal signature before processing.
 - AI output is advisory. Draft edits clear prior approval, and the final submission is gated by a hash of the approved response.
 - Public demo credentials are intentionally only for the disposable hackathon demo. Change them before any real use.
+- Render Free is for prototypes and hobby projects, not production. The app uses MongoDB Atlas and PayPal/Gemini external APIs; unusual outbound traffic may trigger Render's free-service restrictions.
 
 ## Hackathon submission
 

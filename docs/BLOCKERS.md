@@ -15,7 +15,7 @@ Updated 2026-11-11.
 
 ## Still required before portal submission
 
-1. Create the Render service from `render.yaml`, set its environment values (including public `APP_BASE_URL`, Atlas URI, demo credentials, PayPal Sandbox credentials, Gemini key, and the deployment's webhook ID), and deploy.
+1. Create the Render Free service from `render.yaml`, set its environment values (including public `APP_BASE_URL`, Atlas URI, demo credentials, PayPal Sandbox credentials, Gemini key, and the deployment's webhook ID), and deploy. Tell judges a Free instance may need about a minute to wake after idling.
 2. Register `https://YOUR-HOST/api/webhooks/paypal` in the Sandbox PayPal app. Set `PAYPAL_WEBHOOK_ID` and `WEBHOOK_VERIFY=online` in Render.
 3. Open the hosted app in a private browser session with the public demo login; verify login, project/milestone seed, and the dispute screen. The sandbox case can remain under review; do not imply an outcome.
 4. Record and upload the public demo video (under three minutes) and complete the portal fields, then submit.

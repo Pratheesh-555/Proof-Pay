@@ -15,6 +15,7 @@ ProofPay is a PayPal AI Hackathon prototype for freelancers. It connects client 
 - `server/src/ai/`: Gemini structured generation, policy checks, evidence-claim verification.
 - `server/src/db/`: MongoDB connection and Mongoose models.
 - Production uses one Render Node web service to serve the API and `web/dist`; MongoDB Atlas stores app data.
+- `render.yaml` uses Render Free and enables idempotent seed-on-start because Free has no shell or one-off jobs. It sleeps after 15 idle minutes and can take about a minute to wake.
 
 ## Current verified state
 

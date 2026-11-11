@@ -124,7 +124,7 @@ No copyrighted music, no third-party logos without permission (GitHub/WhatsApp l
 
 - [ ] Public GitHub repo, **MIT LICENSE file**, license visible in repo **About**
 - [ ] README: what/why, architecture image, setup steps, **judge guide** (URL, freelancer login, sandbox buyer login, open dispute IDs, Replay), **AI tools used and how**, eval table, honest limitations, next steps
-- [ ] Hosted demo URL live (Render Starter) — **must stay up until 15 Dec 2026**
+- [ ] Hosted demo URL live (Render Free; first visit can take about a minute after idle) — **must remain available through judging**
 - [ ] YouTube video public, < 3:00, shows the app running
 - [ ] Devpost description with features + AI tools section
 - [ ] AG Grid used visibly (and trial key valid through 15 Dec, or Community only)
@@ -205,7 +205,7 @@ Follow the Anti-Loop Protocol (guide B.1). When finished, update the Status sect
 - [ ] MongoDB Atlas: free M0 cluster, DB user, **Network Access 0.0.0.0/0**, copy URI.
 - [ ] Google AI Studio: Gemini API key. Note which Gemini model names your key lists (`GEMINI_MODEL`).
 - [ ] GitHub: create the **public demo repo** whose releases/commits we'll show (e.g. `acme-landing-demo`), push a few commits, create release `v1.0`. Fine-grained PAT, read-only on that repo.
-- [ ] Render: claim the $50 credit; new **Web Service (Starter)** from our repo (Day-1 uses `render.day1.yaml` settings: root `server`, start `node scripts/day1/webhook-server.js`).
+- [ ] Render: create the full app from the public GitHub repo using root `render.yaml` (Free plan). Set the required secrets, then add the deployed URL and webhook ID. The seed runs on startup because Free has no shell or one-off jobs.
 - [ ] Create our repo `proofpay` (public), add **MIT LICENSE**, set About → license.
 
 **F checklist**
@@ -304,33 +304,7 @@ DISPUTE_POLL_MINUTES=5
 DEBUG_TOKEN=change-me
 ```
 
-`render.day1.yaml` (use these settings in the Render dashboard, or as a Blueprint)
-```yaml
-# Day-1 only: deploys the webhook test server. Replace with render.yaml (full app) from Step S3.
-services:
-  - type: web
-    name: proofpay
-    runtime: node
-    region: singapore
-    plan: starter
-    rootDir: server
-    buildCommand: npm ci
-    startCommand: node scripts/day1/webhook-server.js
-    healthCheckPath: /health
-    envVars:
-      - key: NODE_VERSION
-        value: "22.12.0"
-      - key: WEBHOOK_VERIFY
-        value: offline
-      - key: PAYPAL_CLIENT_ID
-        sync: false
-      - key: PAYPAL_CLIENT_SECRET
-        sync: false
-      - key: PAYPAL_WEBHOOK_ID
-        sync: false
-      - key: DEBUG_TOKEN
-        sync: false
-```
+The earlier Day-1-only Render webhook service was retired. Use the repository-root `render.yaml` for the complete app; do not deploy a separate webhook-only service.
 
 `server/src/payments/paypal/client.js`, `invoices.js`, `disputes.js`, `webhookVerify.js` → copy from **LLD §8.1–8.4** (same code).
 

@@ -42,3 +42,5 @@ PayPal controls current dispute actions and final case outcome. A case shown as 
 ## Demo bootstrap
 
 `npm run seed --prefix server` creates or reuses the configured demo freelancer, a Sandbox client, one clearly labeled project, and one $5 DRAFT milestone. It intentionally does not create payment events, client approvals, delivery evidence, or a resolved dispute.
+
+The Render Free blueprint sets `SEED_DEMO_ON_START=true`, so the same idempotent seed runs after the app connects to MongoDB on each cold start. This is needed because Free web services do not provide shell access or one-off jobs. Free services sleep after 15 minutes without traffic and take about a minute to wake.

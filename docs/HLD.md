@@ -15,8 +15,8 @@
 | D-2 | Does the client need a PayPal account to approve? | **No.** Approve via signed link. PayPal account (sandbox buyer) only needed to **pay** | Lower friction, and the approval is our evidence, independent of PayPal |
 | D-3 | Partial-refund cap | Freelancer sets it **per project**, default **30%** of milestone | A cap the AI can never exceed; set before any dispute |
 | D-4 | What counts as **verified** evidence | Captured **server-side** from GitHub API, PayPal API, or a client action on the client page. Everything typed/uploaded by the freelancer is **claimed** | Simple, honest rule we can explain in one sentence |
-| D-5 | Deployment shape | **One** Render web service (Express API + built React app + in-process scheduler) + MongoDB Atlas M0 | One URL, no CORS, cheapest to keep alive until 15 Dec |
-| D-6 | Render plan | **Starter (paid, from the $50 credit)**, not free | Free tier sleeps → slow webhooks, and judges test until **15 Dec 2026** |
+| D-5 | Deployment shape | **One** Render web service (Express API + built React app + in-process scheduler) + MongoDB Atlas M0 | One URL, no CORS, simple hackathon deployment |
+| D-6 | Render plan | **Free** for the hackathon demo; tell judges about the cold start | Avoids hosting charges; Free sleeps after 15 idle minutes and can take about a minute to wake |
 | D-7 | Currency | **USD** only | Freelancers with clients abroad; sandbox accounts default to USD |
 | D-8 | AI model | Gemini via Vercel AI SDK **v4**, model name from env `GEMINI_MODEL` (default `gemini-3.5-flash-lite`) | Agent Toolkit 1.11 depends on `ai@^4`; Gemini 2.5 is shut down (Oct 2026) |
 | D-9 | Prize focus | Best Use of PayPal + AI (honorable mention) + AG Grid (sponsor) | Max allowed: one grand/HM + one sponsor |
@@ -371,14 +371,14 @@ flowchart LR
 
 | Item | Choice |
 |---|---|
-| Hosting | Render web service, **Starter** plan, Node 22, region Singapore |
+| Hosting | Render web service, **Free** plan, Node 22, region Singapore |
 | Build | `npm ci --include=dev --prefix web && npm run build --prefix web && npm ci --prefix server` (`--include=dev` because `NODE_ENV=production` would otherwise skip Vite) |
 | Start | `node server/src/index.js` (serves `web/dist` + `/api/*`) |
-| DB | MongoDB Atlas M0, network access `0.0.0.0/0` (Render has no static IP on Starter) with strong DB password |
+| DB | MongoDB Atlas M0, network access configured to allow the Render service; use a least-privilege DB user with a strong password |
 | Files | Uploads on Render persistent disk is a paid add-on → store files in **MongoDB GridFS** (small PDFs/images) |
 | Environments | `local` (ngrok or Render preview for webhooks) and `prod` (sandbox PayPal). Separate PayPal webhook per URL |
-| Keep-alive | Starter doesn't sleep. Budget: ~$7/month × 2 months ≈ $14 of the $50 credit |
-| Judge access | README: URL, freelancer login, sandbox buyer login, list of open sandbox disputes, "Replay a dispute" button |
+| Availability | Free service sleeps after 15 minutes idle and can take about a minute to wake; seed-on-start prepares the demo login and sample workspace |
+| Judge access | README: URL, freelancer login, Sandbox buyer login if needed, and a note that the first request may take about a minute |
 
 ---
 
@@ -403,7 +403,7 @@ flowchart LR
 | `provide-evidence` rejects multipart | 4xx with `details[].issue` | Retry **once** with notes only (no file); still failing → submit note via `send-message`, attach PDF in-app; record in BLOCKERS.md |
 | Gemini 3 + AI SDK v4 tool-calling incompatibility | Day-1 Gemini smoke test step 2 | `AGENT_MODE=direct` (still uses toolkit tools, no multi-step model loop) |
 | Webhook signature fails | `verified:false` in log | Check `PAYPAL_WEBHOOK_ID` matches **this URL's** webhook; switch to `WEBHOOK_VERIFY=online` once; dashboard "simulate" events are expected to fail offline verification |
-| Render cold start / outage during judging | Health check | Starter plan; poller catches up; video shows the full flow anyway |
+| Render cold start / outage during judging | Health check | Free service wakes on first request; mention the delay and keep the demo video as a fallback |
 | AG Grid Enterprise licence | Watermark in UI | Use Community features only, or trial key via `VITE_AG_GRID_LICENSE_KEY` (never committed) |
 
 ---
