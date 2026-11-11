@@ -19,8 +19,8 @@ export default function AppShell({ user }) {
     <div className="min-h-screen bg-canvas text-ink">
       <aside className="sidebar fixed inset-y-0 left-0 z-20 hidden w-[248px] flex-col border-r border-line bg-white lg:flex">
         <div className="flex h-[76px] items-center gap-3 px-6">
-          <div className="brand-mark">p</div>
-          <div><div className="text-[17px] font-bold tracking-[-0.04em]">proofpay</div><div className="text-[11px] font-semibold uppercase tracking-[0.13em] text-muted">Freelancer workspace</div></div>
+          <div className="brand-mark">P</div>
+          <div><div className="text-[17px] font-bold tracking-[-0.04em]">ProofPay</div><div className="text-[11px] font-semibold uppercase tracking-[0.12em] text-muted">Freelancer payments</div></div>
         </div>
         <div className="mx-4 mt-5 rounded-xl border border-line bg-[#f8faff] p-3.5">
           <div className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-[#0066f5]"/><span className="text-xs font-semibold text-[#053782]">Sandbox environment</span></div>
@@ -37,16 +37,16 @@ export default function AppShell({ user }) {
         <div className="border-t border-line p-4">
           <div className="flex items-center gap-3 rounded-xl px-2 py-2">
             <div className="avatar">{firstName.slice(0, 1).toUpperCase()}</div>
-            <div className="min-w-0 flex-1"><div className="truncate text-sm font-semibold">{user?.name || user?.email}</div><div className="text-xs text-muted">Freelancer account</div></div>
+            <div className="min-w-0 flex-1"><div className="break-words text-xs font-semibold leading-4">{user?.name || user?.email}</div><div className="text-xs text-muted">Freelancer account</div></div>
             <button className="help-button" onClick={signOut}>Sign out</button>
           </div>
         </div>
       </aside>
       <div className="lg:pl-[248px]">
         <header className="sticky top-0 z-10 flex h-[68px] items-center justify-between border-b border-line bg-white/90 px-5 backdrop-blur sm:px-8">
-          <div className="flex items-center gap-3 lg:hidden"><div className="brand-mark !h-8 !w-8 !text-base">p</div><span className="font-bold tracking-tight">proofpay</span></div>
+          <div className="flex items-center gap-3 lg:hidden"><div className="brand-mark !h-8 !w-8 !text-base">P</div><span className="font-bold tracking-tight">ProofPay</span></div>
           <div className="hidden text-sm text-muted sm:block">{today} <span className="mx-2 text-[#d5d9df]">/</span> <span className="font-medium text-ink">{currentPage}</span></div>
-          <div className="flex items-center gap-3"><button className="icon-button" aria-label="Notifications">♧</button><button className="help-button">Help & feedback <span className="ml-1 text-muted">↗</span></button></div>
+          <a className="help-button" href="https://github.com/Pratheesh-555/Proof-Pay/blob/main/docs/WORKFLOW_SEQUENCE.md" target="_blank" rel="noreferrer">How it works <span className="ml-1 text-brand">↗</span></a>
         </header>
         <main className="mx-auto max-w-[1440px] px-5 py-8 sm:px-8 sm:py-10"><div key={location.pathname} className="page-enter"><Outlet /></div></main>
       </div>

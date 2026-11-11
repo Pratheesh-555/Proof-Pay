@@ -43,12 +43,12 @@ export default function Dashboard() {
     action: item.decision?.action || '—',
   })), [cases]);
   const columns = useMemo(() => [
-    { field: 'dispute', headerName: 'DISPUTE', minWidth: 190, flex: 1, cellRenderer: ({ data }) => <Link className="font-semibold text-brand" to={`/cases/${data.id}`}>{data.dispute}</Link> },
-    { field: 'project', headerName: 'PROJECT', minWidth: 160, flex: 1 },
-    { field: 'reason', headerName: 'REASON', minWidth: 150, flex: 1 },
-    { field: 'amount', headerName: 'AMOUNT', width: 120 },
-    { field: 'action', headerName: 'AI ACTION', width: 120 },
-    { field: 'status', headerName: 'STATUS', width: 165, cellRenderer: StatusCell },
+    { field: 'dispute', headerName: 'DISPUTE', minWidth: 170, flex: 1, cellRenderer: ({ data }) => <Link className="font-semibold text-brand" to={`/cases/${data.id}`}>{data.dispute}</Link> },
+    { field: 'project', headerName: 'PROJECT', minWidth: 125, flex: 1, tooltipField: 'project' },
+    { field: 'reason', headerName: 'REASON', minWidth: 135, flex: 1, tooltipField: 'reason' },
+    { field: 'amount', headerName: 'AMOUNT', width: 95 },
+    { field: 'action', headerName: 'AI ACTION', width: 98 },
+    { field: 'status', headerName: 'STATUS', width: 125, cellRenderer: StatusCell },
   ], []);
   const openCases = cases.filter((c) => !['RESOLVED', 'SUBMITTED'].includes(c.status)).length;
 
@@ -61,7 +61,7 @@ export default function Dashboard() {
     <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
       <Metric label="Active projects" value={projects.length} note="Connected to your workspace" icon="▧" tone="green" />
       <Metric label="Disputes needing review" value={openCases} note="Human approval required before submission" icon="◇" tone="rose" />
-      <Metric label="Total cases" value={cases.length} note="PayPal Sandbox and replay cases" icon="↗" tone="blue" />
+      <Metric label="Total cases" value={cases.length} note="Imported and replay cases" icon="↗" tone="blue" />
       <Metric label="Milestones" value={milestoneCount} note="Delivery and approval stages tracked" icon="◷" tone="sand" />
     </div>
     <section className="overflow-hidden rounded-2xl border border-line bg-white shadow-panel">
@@ -70,9 +70,9 @@ export default function Dashboard() {
         <Link to="/cases" className="text-xs font-semibold text-brand">Open case workspace →</Link>
       </div>
       <div className="ag-theme-quartz proofpay-grid h-[330px] w-full">
-        <AgGridReact rowData={rows} columnDefs={columns} rowHeight={54} headerHeight={42} suppressCellFocus pagination={false} loading={loading} overlayNoRowsTemplate="<span>No disputes yet. Import a Sandbox dispute from the Dispute cases page.</span>" />
+        <AgGridReact rowData={rows} columnDefs={columns} rowHeight={54} headerHeight={42} tooltipShowDelay={250} suppressCellFocus pagination={false} loading={loading} overlayNoRowsTemplate="<span>No disputes yet. Import a Sandbox dispute from the Dispute cases page.</span>" />
       </div>
-      <div className="flex flex-col justify-between gap-2 border-t border-line bg-[#fafbfc] px-6 py-3 text-xs text-muted sm:flex-row"><span>No live funds move in this demo.</span><span>PayPal decides dispute outcomes; AI suggestions are drafts.</span></div>
+      <div className="flex flex-col justify-between gap-2 border-t border-line bg-[#fafbfc] px-6 py-3 text-xs text-muted sm:flex-row"><span>PayPal decides dispute outcomes.</span><span>AI suggestions are drafts.</span></div>
     </section>
   </div>;
 }
