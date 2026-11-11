@@ -1,5 +1,7 @@
 # ProofPay — PRD + Step-by-Step Build Guide
 
+> **Status note (11 Nov 2026):** This document preserves the original requirements and build checklist. The unchecked tasks are not a current remaining-work list, and planned stories are not necessarily implemented. Use [`IMPLEMENTATION_STATUS.md`](IMPLEMENTATION_STATUS.md) for the as-built feature scope and [`DEVPOST_SUBMISSION.md`](DEVPOST_SUBMISSION.md) for claims safe to use in the submission.
+
 > **Version** 1.0 · 6 Nov 2026 · Deadline **12 Nov 2026, 12:00 PM PT = 13 Nov, 1:30 AM IST**. Our target: submit **12 Nov evening IST**.
 > **Part A** = what we build and why (PRD; it also replaces the older problem doc). **Part B** = the order we build it in, with checks and a fallback for every step.
 > Owners: **B** = backend / PayPal / AI · **F** = frontend / design / video · **B+F** = both.
@@ -202,7 +204,7 @@ Follow the Anti-Loop Protocol (guide B.1). When finished, update the Status sect
 **B checklist**
 - [ ] developer.paypal.com → log in → **Testing Tools → Sandbox Accounts**: confirm one **Business** and one **Personal** account exist (create if not). For the Personal account, note **email**, **password** (View/Edit) and **Payer ID** (account details). Make sure the Business account has a balance (needed for refunds/offers).
 - [ ] **Apps & Credentials → Sandbox → Create App** "ProofPay" (merchant type) under the Business account → copy Client ID + Secret. In the app's features, make sure **Invoicing** and **Disputes** are enabled (the Day-1 script prints the scopes).
-- [ ] MongoDB Atlas: free M0 cluster, DB user, **Network Access 0.0.0.0/0**, copy URI.
+- [ ] MongoDB Atlas: create a least-privilege DB user and allowlist the current Render service outbound IP ranges shown in **Render → service → Connect → Outbound**. Avoid `0.0.0.0/0` except as a temporary, deliberate diagnostic; if used, remove it after connectivity works. See [Render's Atlas connection guide](https://render.com/docs/connect-to-mongodb-atlas).
 - [ ] Google AI Studio: Gemini API key. Note which Gemini model names your key lists (`GEMINI_MODEL`).
 - [ ] GitHub: create the **public demo repo** whose releases/commits we'll show (e.g. `acme-landing-demo`), push a few commits, create release `v1.0`. Fine-grained PAT, read-only on that repo.
 - [ ] Render: create the full app from the public GitHub repo using root `render.yaml` (Free plan). Set the required secrets, then add the deployed URL and webhook ID. The seed runs on startup because Free has no shell or one-off jobs.
@@ -763,7 +765,7 @@ Devpost form (one representative submits), repo URL, video URL, hosted URL, desc
 | P21 | Gemini 429 | Rate limit | Wait 60 s; fewer calls; cache results on the case |
 | P22 | `zlib.crc32 is not a function` | Node < 22.2 | `NODE_VERSION=22.12.0` on Render; `node -v` locally |
 | P23 | `node --test test/` can't find files | Node 22 wants files/globs | `npm test` (uses the glob) |
-| P24 | Atlas timeout from Render | IP allowlist | Network Access `0.0.0.0/0` |
+| P24 | Atlas timeout from Render | Network allowlist or DB credentials | Check the current Render service outbound CIDRs in **Connect → Outbound**, allowlist those in Atlas, then verify the DB user and encoded URI. Avoid a permanent `0.0.0.0/0` rule. |
 | P25 | AG Grid error #272 / grid empty | Modules not registered / container has no height | `ModuleRegistry.registerModules([AllCommunityModule])`; give the grid wrapper a fixed height |
 | P26 | AG Grid theme warning / unstyled | Mixing legacy CSS with the Theming API | Use the default theme (`themeQuartz`) and don't import legacy CSS, or set `theme="legacy"` consistently |
 | P27 | Render build `vite: not found` | devDependencies skipped | `npm ci --include=dev --prefix web` |

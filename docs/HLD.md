@@ -1,5 +1,7 @@
 # ProofPay — High-Level Design (HLD)
 
+> **Status note (11 Nov 2026):** This is the original design target, not an as-built feature list. Some proposed GitHub/deploy evidence, reminders, replay/case-pool, file/PDF, and PayPal Agent Toolkit flows were not implemented. See [`IMPLEMENTATION_STATUS.md`](IMPLEMENTATION_STATUS.md) for shipped scope and known gaps; the README describes the working demo.
+
 > **Version** 1.0 · 6 Nov 2026 · Owners: Backend/PayPal/AI (B) + Frontend/Design/Video (F)
 > **Read with:** `LLD.md` (exact schemas, endpoints, code), `PRD_AND_BUILD_GUIDE.md` (what to build and in what order), `CLAUDE.md` (project memory).
 > Items marked **[DEFAULT]** are decisions taken without team input. Change them in the HLD *and* in `CLAUDE.md` if you disagree.
@@ -14,11 +16,11 @@
 | D-1 | Lock & Release (authorize/capture) | **Cut**. Mentioned as "next step" in README only | Second payment flow, small demo value, 3-day capture-guarantee edge cases |
 | D-2 | Does the client need a PayPal account to approve? | **No.** Approve via signed link. PayPal account (sandbox buyer) only needed to **pay** | Lower friction, and the approval is our evidence, independent of PayPal |
 | D-3 | Partial-refund cap | Freelancer sets it **per project**, default **30%** of milestone | A cap the AI can never exceed; set before any dispute |
-| D-4 | What counts as **verified** evidence | Captured **server-side** from GitHub API, PayPal API, or a client action on the client page. Everything typed/uploaded by the freelancer is **claimed** | Simple, honest rule we can explain in one sentence |
-| D-5 | Deployment shape | **One** Render web service (Express API + built React app + in-process scheduler) + MongoDB Atlas M0 | One URL, no CORS, simple hackathon deployment |
+| D-4 | What counts as **verified** evidence | In the shipped build, PayPal events and client actions are captured server-side; freelancer-entered delivery notes are **claimed**. GitHub/deploy checks and file uploads in this design are not implemented. | Keep the demo's evidence claims honest |
+| D-5 | Deployment shape | **One** Render web service (Express API + built React app) + MongoDB Atlas M0. Scheduler currently emits pending log markers only; it does not poll or send reminders. | One URL, no CORS, simple hackathon deployment |
 | D-6 | Render plan | **Free** for the hackathon demo; tell judges about the cold start | Avoids hosting charges; Free sleeps after 15 idle minutes and can take about a minute to wake |
 | D-7 | Currency | **USD** only | Freelancers with clients abroad; sandbox accounts default to USD |
-| D-8 | AI model | Gemini via Vercel AI SDK **v4**, model name from env `GEMINI_MODEL` (default `gemini-3.5-flash-lite`) | Agent Toolkit 1.11 depends on `ai@^4`; Gemini 2.5 is shut down (Oct 2026) |
+| D-8 | AI model | Gemini structured generation via Vercel AI SDK **v4**, model name from env `GEMINI_MODEL` (default `gemini-3.5-flash-lite`). Working flow calls PayPal REST clients directly; Agent Toolkit function calling is not used. | Structured responses and direct orchestration are the tested path |
 | D-9 | Prize focus | Best Use of PayPal + AI (honorable mention) + AG Grid (sponsor) | Max allowed: one grand/HM + one sponsor |
 | D-10 | Auth | One pre-made freelancer account (email + password from env), JWT in httpOnly cookie | Out of scope to build sign-up |
 
@@ -26,7 +28,7 @@
 
 ## 1. What we are building (one paragraph)
 
-ProofPay captures **proof at the moment of delivery** (GitHub release/commits, deploy check, files, and the client's own "Approve" click), sends a **PayPal invoice only after the client approves**, chases unpaid invoices with AI reminders that cite the approval, and when a **PayPal dispute** arrives it maps the dispute back to the milestone, has an AI agent decide *was it done / fight, partially refund or accept / what to say*, strips any claim not backed by evidence, and — **only after the freelancer approves** — submits the response through PayPal's own Disputes API.
+The shipped ProofPay app connects freelancer projects and milestones, client approval, PayPal Sandbox invoices/payment events, and dispute response preparation. Gemini creates a structured case assessment and draft; application rules filter unsupported evidence references; the freelancer approves the final response; and the server refreshes PayPal's allowed actions before submitting. GitHub/deploy evidence collection, file uploads, and automatic reminders in the broader design remain future work.
 
 ---
 
@@ -169,6 +171,8 @@ sequenceDiagram
 
 ### F2 — Unpaid reminders
 
+> **Implementation status:** Not implemented. The scheduler currently logs a pending marker; it does not generate or send reminders.
+
 Scheduler (every 15 min; demo mode: `REMINDER_INTERVAL_MINUTES`) finds invoices `SENT` and unpaid past the cooldown → AI writes a short, polite reminder that cites the approval (date, approver name, what was approved) → sent via **Agent Toolkit `send_invoice_reminder`** → stored on the invoice. Max 3 per invoice; freelancer can turn off per project, or press "Send reminder now".
 
 ### F3 — Dispute → AI case → human approval → PayPal → settled
@@ -205,6 +209,8 @@ sequenceDiagram
 ```
 
 ### F4 — Judge replay (works without anyone filing a sandbox dispute)
+
+> **Implementation status:** Not implemented. The public demo currently has a seeded project/milestone and the resolved Sandbox walkthrough case; there is no replay UI or seeded case pool.
 
 Judges must be able to test the project until **15 Dec 2026** and may never file a sandbox dispute. Two paths:
 

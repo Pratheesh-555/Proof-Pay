@@ -1,12 +1,16 @@
 # ProofPay — Low-Level Design (LLD)
 
+> **Status note (11 Nov 2026):** This is a detailed implementation plan, not a guarantee that every listed module, endpoint, schema field, or test exists in the current repository. Several planned connectors and workflows remain unbuilt. See [`IMPLEMENTATION_STATUS.md`](IMPLEMENTATION_STATUS.md) and inspect `server/src/` for the current code.
+
 > **Version** 1.0 · 6 Nov 2026 · Read `HLD.md` first.
 > Code blocks marked **(tested)** were run on Node 22 before this doc was written: the PayPal client, multipart builder, webhook signature check, ledger, policy engine, verifier rules, mapping, approval gate and orchestrator (with a mocked LLM). The live PayPal calls themselves can only be confirmed by the Day-1 sandbox test.
 > Language: **plain JavaScript, ESM** (`"type": "module"`), Node **22.2+** (needed for `zlib.crc32`).
 
 ---
 
-## 1. Repository layout
+## 1. Proposed repository layout (original design target)
+
+The tree below is the target layout from the original implementation plan, not the current checked-out file list. Modules such as GitHub/deploy evidence collectors, replay/demo endpoints, PDF export, reminder service, and some tests in the original plan are absent. Use `docs/IMPLEMENTATION_STATUS.md` and `server/src/` for the current shipped scope.
 
 ```
 proofpay/

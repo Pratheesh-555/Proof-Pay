@@ -91,6 +91,7 @@ For Render, use [`render.yaml`](render.yaml) as the service blueprint and enter 
 The repository is MIT licensed. The deployed demo URL is `https://proofpay-kvc2.onrender.com`; public Sandbox demo login is `demo@proofpay.dev` / `ProofPay-Demo-2026!`. The Devpost text, tool descriptions, limitations, and a sub-three-minute recording outline are in [`docs/DEVPOST_SUBMISSION.md`](docs/DEVPOST_SUBMISSION.md). Add the public YouTube demo-video link in Devpost before submitting. The PayPal case used for the walkthrough is resolved in Sandbox; PayPal remains responsible for deciding real disputes.
 
 See [`docs/SYSTEM_OVERVIEW.md`](docs/SYSTEM_OVERVIEW.md) for the frontend/backend architecture and workflow.
+See [`docs/IMPLEMENTATION_STATUS.md`](docs/IMPLEMENTATION_STATUS.md) for the as-built feature list, remaining product gaps, and public-repository/data-exposure review.
 
 ## License
 
