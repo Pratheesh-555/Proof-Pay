@@ -64,7 +64,7 @@ export default function Dashboard() {
       <Metric label="Total cases" value={cases.length} note="PayPal Sandbox and replay cases" icon="↗" tone="blue" />
       <Metric label="Milestones" value={milestoneCount} note="Delivery and approval stages tracked" icon="◷" tone="sand" />
     </div>
-    <section className="overflow-hidden rounded-2xl border border-line bg-white shadow-panel">
+    <section className="content-card overflow-hidden rounded-2xl border border-line bg-white shadow-panel">
       <div className="flex flex-col justify-between gap-4 border-b border-line px-5 py-5 sm:flex-row sm:items-center sm:px-6">
         <div><h2 className="text-[15px] font-semibold tracking-[-0.02em]">Dispute inbox</h2><p className="mt-1 text-xs text-muted">AI drafts require your review and approval.</p></div>
         <Link to="/cases" className="text-xs font-semibold text-brand">Open case workspace →</Link>
@@ -78,5 +78,5 @@ export default function Dashboard() {
 }
 
 function Metric({ label, value, note, icon, tone }) {
-  return <div className="rounded-2xl border border-line bg-white p-5 shadow-panel"><div className="flex items-center justify-between"><span className="text-xs font-medium text-muted">{label}</span><span className={`metric-icon metric-${tone}`}>{icon}</span></div><div className="mt-4 text-[27px] font-semibold tracking-[-0.055em]">{value}</div><div className="mt-1 text-[11px] text-muted">{note}</div></div>;
+  return <div className="panel-hover rounded-2xl border border-line bg-white p-5 shadow-panel"><div className="flex items-center justify-between"><span className="text-[13px] font-medium text-muted">{label}</span><span className={`metric-icon metric-${tone}`}>{icon}</span></div><div className="mt-4 text-[29px] font-semibold tracking-[-0.055em]">{value}</div><div className="mt-1 text-xs text-muted">{note}</div></div>;
 }

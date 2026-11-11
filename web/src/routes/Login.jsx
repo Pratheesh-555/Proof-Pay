@@ -18,12 +18,13 @@ export default function Login() {
     finally { setBusy(false); }
   }
 
-  return <main className="flex min-h-screen items-center justify-center bg-canvas px-5 py-12">
-    <section className="page-enter w-full max-w-md rounded-3xl border border-line bg-white p-8 shadow-panel sm:p-10">
+  return <main className="login-shell flex min-h-screen items-center justify-center px-5 py-12">
+    <section className="login-card page-enter w-full max-w-md rounded-[28px] border border-line bg-white p-8 shadow-panel sm:p-10">
       <div className="brand-mark mb-6">p</div>
-      <p className="eyebrow">FREELANCER WORKSPACE</p>
+      <p className="eyebrow">PROOFPAY WORKSPACE</p>
       <h1 className="page-title mt-2">Welcome back</h1>
-      <p className="mt-2 text-sm leading-6 text-muted">Sign in to manage approvals, PayPal invoices, and dispute evidence.</p>
+      <p className="mt-2 text-sm leading-6 text-muted">One clear view of project approvals, PayPal payments, and dispute evidence.</p>
+      <div className="my-6 h-px bg-line" />
       <form className="mt-8 space-y-4" onSubmit={submit}>
         <label className="field-label">Email<input autoComplete="username" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="field-input" /></label>
         <label className="field-label">Password<input autoComplete="current-password" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} className="field-input" /></label>
