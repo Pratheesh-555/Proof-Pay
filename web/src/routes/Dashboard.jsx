@@ -7,6 +7,13 @@ import { useAuth } from '../auth/AuthContext.jsx';
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
+function money(cents, currency = 'USD') {
+  const code = typeof currency === 'string' && /^[A-Z]{3}$/.test(currency) ? currency : 'USD';
+  const value = Number(cents);
+  const amount = Number.isFinite(value) ? value / 100 : 0;
+  return new Intl.NumberFormat(undefined, { style: 'currency', currency: code, minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(amount);
+}
+
 function StatusCell({ value }) {
   const cls = ['PAID', 'RESOLVED', 'APPROVED'].includes(value) ? 'status-paid' : ['DISPUTED', 'READY', 'WAITING_PAYPAL', 'UNMAPPED'].includes(value) ? 'status-review' : 'status-progress';
   return <span className={`status-pill ${cls}`}><span className="status-dot" />{String(value ?? '—').replaceAll('_', ' ')}</span>;
